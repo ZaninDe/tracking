@@ -8,10 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        'purple-500': '#8A2BE2',
+      },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'purple-pink': 'linear-gradient(135deg, #000C66 0%, #8A2BE2 50%)',
       },
     },
   },
