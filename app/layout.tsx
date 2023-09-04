@@ -1,6 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
+import { LoginModal } from './components/Modals/LoginModal'
+import { RegisterModal } from './components/Modals/RegisterModal'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -19,7 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <LoginModal />
+        <RegisterModal />
+        <div>{children}</div>
+      </body>
     </html>
   )
 }

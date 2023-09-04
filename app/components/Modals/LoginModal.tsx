@@ -1,7 +1,7 @@
 'use client'
 
 import useLoginModal from '@/app/hooks/useLoginModal'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
 
@@ -9,10 +9,17 @@ import { Input } from '../Inputs/input'
 import { Heading } from '../Heading'
 import { Modal } from './Modal'
 import { Button } from '../Button'
+import useRegisterModal from '@/app/hooks/useRegisterModal'
 
 export function LoginModal() {
   const loginModal = useLoginModal()
+  const registerModal = useRegisterModal()
   const [isLoading, setIsLoading] = useState(false)
+
+  const toggle = useCallback(() => {
+    loginModal.onClose()
+    registerModal.onOpen()
+  }, [loginModal, registerModal])
 
   const {
     register,
@@ -61,7 +68,10 @@ export function LoginModal() {
       <div className="text-center mt-4 font-light">
         <div className="flex justify-center items-center gap-2">
           <div>Primeira vez usando a plataforma?</div>
-          <div className="text-neutral-500 cursor-pointer hover:underline">
+          <div
+            className="text-neutral-500 cursor-pointer hover:underline"
+            onClick={toggle}
+          >
             Criar conta
           </div>
         </div>

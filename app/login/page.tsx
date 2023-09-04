@@ -3,16 +3,19 @@ import Image from 'next/image'
 import { Heading } from '../components/Heading'
 import { greetingMessage } from '../utils/greetingMessage'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '../components/Inputs/input'
 import { Button } from '../components/Button'
 import { LoginModal } from '../components/Modals/LoginModal'
+import { RegisterModal } from '../components/Modals/RegisterModal'
+import useLoginModal from '../hooks/useLoginModal'
 
 export default function Login() {
   const router = useRouter()
   const [isLoading, setIsLoadint] = useState(false)
   const greeting = greetingMessage()
+  const loginModal = useLoginModal()
 
   const {
     register,
@@ -29,49 +32,15 @@ export default function Login() {
     console.log(data)
   }
 
+  useEffect(() => {
+    loginModal.onOpen()
+  }, [])
+
   return (
     <div className="h-screen w-screen bg-purple-pink py-[5%] px-[3%]">
-      <div className="w-full h-full bg-white rounded-2xl flex flex-row">
-        <div className="w-[55%]">
-          <Image
-            className="w-full h-full rounded-l-2xl"
-            src="/images/login_img.jpg"
-            alt="login image"
-            width={500}
-            height={500}
-            quality={100}
-          />
-        </div>
-        <div className="w-[45%] h-full p-16 flex flex-col gap-4 justify-center">
-          <Heading title="Olá," thin />
-          <Heading title={greeting} />
-          <LoginModal />
-          {/* <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-8"
-          >
-            <Input
-              id="email"
-              label="Email"
-              disabled={isLoading}
-              register={register}
-              required
-              errors={errors}
-            />
-
-            <Input
-              id="password"
-              label="Password"
-              disabled={isLoading}
-              register={register}
-              required
-              errors={errors}
-              type="password"
-            />
-
-            <Button label="Entrar" type="submit" />
-          </form> */}
-        </div>
+      <div className="h-full w-full p-16 flex flex-col gap-4 justify-start items-center">
+        <Heading title="Olá," thin />
+        <h1 className="text-white text-4xl font-bold">{greeting}</h1>
       </div>
     </div>
   )

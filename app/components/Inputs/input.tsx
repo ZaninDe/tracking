@@ -32,6 +32,7 @@ export function Input({
         className={`
         peer
         border-b-2
+        border-purple-500
         focus:border-b-4
         w-full
         p-2
@@ -42,7 +43,7 @@ export function Input({
         disabled:opacity-70
         disabled:cursor-not-allowed
         placeholder:uppercase
-        placeholder:tracking-[0.5rem]
+        placeholder:tracking-[0.2rem]
       `}
       />
     </>

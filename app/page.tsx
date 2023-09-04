@@ -1,5 +1,5 @@
-import Image from 'next/image'
+import { LoginModal } from './components/Modals/LoginModal'
 
 export default function Home() {
-  return <div>hello</div>
+  return <div>Hello</div>
 }

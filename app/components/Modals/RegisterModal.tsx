@@ -1,16 +1,17 @@
 'use client'
 
 import useLoginModal from '@/app/hooks/useLoginModal'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
 
 import { Input } from '../Inputs/input'
-import { Heading } from '../Heading'
 import { Modal } from './Modal'
 import { Button } from '../Button'
+import useRegisterModal from '@/app/hooks/useRegisterModal'
 
 export function RegisterModal() {
+  const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -29,10 +30,21 @@ export function RegisterModal() {
     console.log(data)
   }
 
-  const test = <div>hello</div>
+  const toggle = useCallback(() => {
+    registerModal.onClose()
+    loginModal.onOpen()
+  }, [])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
+      <Input
+        id="name"
+        label="Name"
+        disabled={isLoading}
+        register={register}
+        required
+        errors={errors}
+      />
       <Input
         id="email"
         label="Email"
@@ -44,7 +56,16 @@ export function RegisterModal() {
 
       <Input
         id="password"
-        label="Password"
+        label="Senha"
+        disabled={isLoading}
+        register={register}
+        required
+        errors={errors}
+        type="password"
+      />
+      <Input
+        id="password_confirmation"
+        label="Confirme a senha"
         disabled={isLoading}
         register={register}
         required
@@ -60,9 +81,12 @@ export function RegisterModal() {
       <Button label="Entre com o Google" icon={FcGoogle} outline />
       <div className="text-center mt-4 font-light">
         <div className="flex justify-center items-center gap-2">
-          <div>Primeira vez usando a plataforma?</div>
-          <div className="text-neutral-500 cursor-pointer hover:underline">
-            Criar conta
+          <div>Já possui conta?</div>
+          <div
+            className="text-neutral-500 cursor-pointer hover:underline"
+            onClick={toggle}
+          >
+            Entrar
           </div>
         </div>
       </div>
@@ -71,10 +95,10 @@ export function RegisterModal() {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={loginModal.isOpen}
-      title="Entre com sua conta"
+      isOpen={registerModal.isOpen}
+      title="Criar uma conta"
       actionLabel="Entrar"
-      onClose={loginModal.onClose}
+      onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
