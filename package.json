@@ -21,7 +21,8 @@
     "react-hook-form": "^7.46.0",
     "react-icons": "^4.10.1",
     "tailwindcss": "3.3.3",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",

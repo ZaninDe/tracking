@@ -5,8 +5,9 @@ import { IconType } from 'react-icons'
 
 interface ButtonProps {
   label: string
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
   disabled?: boolean
+  type?: 'submit' | 'reset' | 'button' | undefined
   outline?: boolean
   small?: boolean
   icon?: IconType
@@ -16,6 +17,7 @@ export function Button({
   label,
   onClick,
   disabled,
+  type,
   outline,
   small,
   icon: Icon,
@@ -24,6 +26,7 @@ export function Button({
     <button
       onClick={onClick}
       disabled={disabled}
+      type={type || 'button'}
       className={`
         relative
         disabled:opacity-70
@@ -33,7 +36,7 @@ export function Button({
         transition
         w-full
         ${outline ? 'bg-white' : 'bg-purple-500'}
-        ${outline ? 'border-neutral-950' : 'bg-purple-500'}
+        ${outline ? 'border-neutral-950' : ''}
         ${outline ? 'text-neutral-950' : 'text-white'}
         ${small ? 'py-1' : 'py-3'}
         ${small ? 'text-sm' : 'text-md'}
