@@ -1,6 +1,6 @@
 'use client'
 
-import useLoginModal from '@/app/hooks/useLoginModal'
+import axios from 'axios'
 import { useCallback, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
@@ -8,7 +8,9 @@ import { FcGoogle } from 'react-icons/fc'
 import { Input } from '../Inputs/input'
 import { Modal } from './Modal'
 import { Button } from '../Button'
+import useLoginModal from '@/app/hooks/useLoginModal'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
+import { toast } from 'react-hot-toast'
 
 export function RegisterModal() {
   const registerModal = useRegisterModal()
@@ -27,13 +29,25 @@ export function RegisterModal() {
   })
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data)
+    axios
+      .post('/api/register', data)
+      .then(() => {
+        registerModal.onClose()
+        loginModal.onOpen()
+      })
+      .catch((err) => {
+        toast.error('Something went wrong.')
+        console.log(err)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const toggle = useCallback(() => {
     registerModal.onClose()
     loginModal.onOpen()
-  }, [])
+  }, [loginModal, registerModal])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
