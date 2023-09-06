@@ -1,6 +1,7 @@
 'use client'
 
 import useLoginModal from '@/app/hooks/useLoginModal'
+import { signIn } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
@@ -8,13 +9,16 @@ import { FcGoogle } from 'react-icons/fc'
 import { Input } from '../Inputs/input'
 import { Heading } from '../Heading'
 import { Modal } from './Modal'
-import { Button } from '../Button'
+import { Button } from '../Buttons/Button'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
+import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 export function LoginModal() {
   const loginModal = useLoginModal()
   const registerModal = useRegisterModal()
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const toggle = useCallback(() => {
     loginModal.onClose()
@@ -33,7 +37,24 @@ export function LoginModal() {
   })
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data)
+    setIsLoading(true)
+
+    signIn('credentials', {
+      ...data,
+      callbackUrl: '/',
+    }).then((callback) => {
+      setIsLoading(false)
+
+      if (callback?.ok) {
+        toast.success('Usuário logado.')
+        router.refresh()
+        loginModal.onClose()
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error)
+      }
+    })
   }
 
   const test = <div>hello</div>

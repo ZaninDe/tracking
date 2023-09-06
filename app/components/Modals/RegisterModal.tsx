@@ -7,7 +7,7 @@ import { FcGoogle } from 'react-icons/fc'
 
 import { Input } from '../Inputs/input'
 import { Modal } from './Modal'
-import { Button } from '../Button'
+import { Button } from '../Buttons/Button'
 import useLoginModal from '@/app/hooks/useLoginModal'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
 import { toast } from 'react-hot-toast'
