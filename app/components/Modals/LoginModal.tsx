@@ -42,6 +42,7 @@ export function LoginModal() {
     signIn('credentials', {
       ...data,
       callbackUrl: '/',
+      redirect: false,
     }).then((callback) => {
       setIsLoading(false)
 

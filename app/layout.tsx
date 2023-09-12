@@ -3,8 +3,7 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import { LoginModal } from './components/Modals/LoginModal'
 import { RegisterModal } from './components/Modals/RegisterModal'
-import getCurrentUser from './actions/getCurrentUser'
-
+import NextAuthSessionProvider from './api/providers/SessionProvider'
 const roboto = Roboto({
   subsets: ['latin'],
   weight: ['100', '300', '400', '500', '700', '900'],
@@ -20,13 +19,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = getCurrentUser()
   return (
     <html lang="en">
       <body className={roboto.className}>
         <LoginModal />
         <RegisterModal />
-        <div>{children}</div>
+        {<NextAuthSessionProvider>{children}</NextAuthSessionProvider>}
       </body>
     </html>
   )
